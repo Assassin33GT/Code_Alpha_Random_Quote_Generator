@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:random_quote_generator/saved_quotes.dart';
 import 'package:random_quote_generator/start_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -18,6 +19,26 @@ class _StartPageState extends State<StartPage>{
   var i = 0;
   List<String> quotes = [];
 
+  Future<void> saveQuotes(List<String> quotes) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('quotes', quotes);
+  }
+
+  Future<List<String>> getPrefs() async{
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('quotes') ?? [];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedQuotes();
+  }
+  
+  Future<void> _loadSavedQuotes() async {
+  quotes = await getPrefs();
+  setState(() {}); // Rebuild the widget to reflect the loaded quotes
+}
   void screenSwitch(String s){
     setState(() {
       activeScreen = s;
@@ -67,6 +88,7 @@ class _StartPageState extends State<StartPage>{
     }
     if(check == false && q != ''){
       quotes.add(q);
+      saveQuotes(quotes);
     }
   }
   
