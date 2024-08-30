@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:random_quote_generator/saved_quotes.dart';
 import 'package:random_quote_generator/start_screen.dart';
