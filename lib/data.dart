@@ -43,7 +43,6 @@ const images = [
   'android/assets/images/image6.jpg',
   'android/assets/images/image7.jpg',
   'android/assets/images/image8.jpg',
-  'android/assets/images/image9.jpg',
   'android/assets/images/image10.jpg',
   'android/assets/images/image11.jpg',
   'android/assets/images/image12.jpg',
