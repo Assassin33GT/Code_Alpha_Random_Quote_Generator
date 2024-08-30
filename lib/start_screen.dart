@@ -6,10 +6,11 @@ import 'package:random_quote_generator/data.dart';
 import 'package:share_plus/share_plus.dart';
 
 class StartScreen extends StatefulWidget {
-  const StartScreen(this.newImageC, {super.key});
+  const StartScreen(this.newImageC, this.screenSwitch, this.getQuote, {super.key});
 
   final void Function(String image) newImageC;
-
+  final void Function(String s) screenSwitch;
+  final void Function(String q) getQuote;
   @override
   State<StartScreen> createState(){
     return _StartScreenState();
@@ -117,12 +118,7 @@ void showImageWithDelay(){
                                   onPressed:(){
                                     setState(() {
                                       showTextWithDelay();
-                                      
-                                      //newQuote =  generateQuote();
-                                      //newImage = randomImages();
-                                      
                                       showImageWithDelay();
-                                      //widget.newImage(newImage);
                                     });
                                       showHead = false;
                                     },
@@ -136,7 +132,7 @@ void showImageWithDelay(){
                             ),
                           ),
                           Align(
-                            alignment: const Alignment(0, 0.6),
+                            alignment: const Alignment(-0.7, 0.6),
                             child: ElevatedButton.icon(
                               onPressed: (){
                                 if(newQuote.isEmpty){
@@ -162,7 +158,36 @@ void showImageWithDelay(){
                                 )
                               ),
                           ),
-                        ],
+                          Align(
+                            alignment: const Alignment(0.8, 0.6),
+                            child: ElevatedButton.icon(
+                              onPressed: (){
+                                widget.getQuote(newQuote);
+                              },
+                              icon: const Icon(Icons.save_sharp),
+                              label: const Text(
+                                'Save the quote',
+                                style: TextStyle(
+                                  color: Colors.black
+                                ),
+                                ),
+                              ),
+                          ),
+                          Align(
+                            alignment: const Alignment(0.05, 0.75),
+                            child: ElevatedButton(
+                              onPressed: (){
+                                widget.screenSwitch('saved-quotes');
+                              },
+                              child: const Text(
+                                'Saved quotes',
+                                style: TextStyle(
+                                  color: Colors.black
+                                ),
+                                ),
+                              ),
+                          ),
+                        ]
                       ),
               );
   }

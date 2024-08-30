@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:random_quote_generator/start_screen.dart';
-//import 'package:video_player/video_player.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:random_quote_generator/saved_quotes.dart';
+import 'package:random_quote_generator/start_screen.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -16,8 +17,15 @@ class _StartPageState extends State<StartPage>{
 
   var activeScreen = 'start-screen';
   String im = '';
-  
   var i = 0;
+  List<String> quotes = [];
+
+  void screenSwitch(String s){
+    setState(() {
+      activeScreen = s;
+    });
+  }
+
   void newImageC(String image){
     setState(() {
       im = image;  
@@ -25,9 +33,13 @@ class _StartPageState extends State<StartPage>{
   }
 
   BoxDecoration changeImage(){
-    if (i == 0)
+    if (i == 0 && im == '')
     {
       i++;
+      if(im == '')
+        {
+          i = 0;
+        }
       return const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -38,7 +50,6 @@ class _StartPageState extends State<StartPage>{
                     end: Alignment.bottomRight
                   ),
                 );
-        
     }else{
       return BoxDecoration(
               image: DecorationImage(
@@ -48,11 +59,30 @@ class _StartPageState extends State<StartPage>{
             );
     }
   }
+
+  void getQuote(String q) {
+    bool check = false;
+    for(int i = 0;i<quotes.length;i++){
+      if(quotes[i] == q){
+        check = true;
+      }
+    }
+    if(check == false && q != ''){
+      quotes.add(q);
+    }
+  }
   
   @override
   Widget build(contex) {
-    Widget screenWidget = StartScreen(newImageC);
-    
+    Widget screenWidget = StartScreen(newImageC, screenSwitch, getQuote);
+
+    if (activeScreen == 'saved-quotes'){
+      im = '';
+      screenWidget = SavedQuotes(quotes, screenSwitch);
+    }
+    if (activeScreen == 'start-screen'){
+      screenWidget = StartScreen(newImageC, screenSwitch, getQuote);
+    }
     return MaterialApp(
       home: Scaffold(
         body: AnimatedContainer(
