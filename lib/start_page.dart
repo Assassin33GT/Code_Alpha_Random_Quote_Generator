@@ -37,7 +37,7 @@ class _StartPageState extends State<StartPage>{
   
   Future<void> _loadSavedQuotes() async {
   quotes = await getPrefs();
-  setState(() {}); // Rebuild the widget to reflect the loaded quotes
+  setState(() {});
 }
   void screenSwitch(String s){
     setState(() {
@@ -104,6 +104,7 @@ class _StartPageState extends State<StartPage>{
       screenWidget = StartScreen(newImageC, screenSwitch, getQuote);
     }
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: AnimatedContainer(
           duration: const Duration(seconds: 1),
