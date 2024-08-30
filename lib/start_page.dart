@@ -37,7 +37,7 @@ class _StartPageState extends State<StartPage>{
   
   Future<void> _loadSavedQuotes() async {
   quotes = await getPrefs();
-  setState(() {}); // Rebuild the widget to reflect the loaded quotes
+  setState(() {});
 }
   void screenSwitch(String s){
     setState(() {
